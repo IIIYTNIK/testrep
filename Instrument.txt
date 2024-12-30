@@ -1,0 +1,15 @@
+Guitar
+Bass Guitar
+steel
+Mahagony
+4
+Wood
+Jumbo
+0
+BowedStringInstrument
+Double bass
+gut
+wood
+4
+Carbon
+0
