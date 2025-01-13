@@ -22,9 +22,9 @@ public:
 
     //сеттеры
     ///установка типа корпуса
-    void set_bodyType(const string& bodytupe);
+    void set_body_Type(const string& bodytupe);
     ///установка типа медиатора
-    void set_mediatormaterial(const string& madmat);
+    void set_mediator_material(const string& madmat, int test);
 
     //геттеры
     ///возвращает тип корпуса в строке 

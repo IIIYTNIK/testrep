@@ -1,78 +1,78 @@
-//автор Бородиенко Д.Т.
-//Производный класс Guitar, описывающий свойства гитары.
+// Class declaration for a Guitar object.
+//Includes Guitar class definition.
 #include "Guitar.h"
 #include <fstream> 
 
-// Конструктор по умолчанию. Инициализирует все поля класса значениями по умолчанию.
+// Default constructor for the Guitar class. Initializes all member variables to default values.
 Guitar::Guitar() {
-    name = " ";             //название гитары
-    stringMaterial = " ";   //материал струн
-    bodyMaterial = " ";     //материал корпуса
-    numberOfStrings = 0;    //колличество струн
-    bodyType = " ";         //тип корпуса
-    mediatormaterial = " "; //материал медиатора
-    attunement = 0; // Параметр настроенности гитары
+    name = " ";             //Name of the guitar
+    stringMaterial = " ";   //Material of the strings
+    bodyMaterial = " ";     //Material of the body
+    numberOfStrings = 0;    //Number of strings
+    bodyType = " ";         //Type of the body
+    mediatormaterial = " "; //Material of the mediator
+    attunement = 0; // Tuning level of the guitar
 }
 
-// Конструктор с параметрами. Инициализирует поля класса значениями, переданными в качестве аргументов.
+// Constructor for the Guitar class that takes parameters to initialize the member variables.
 Guitar::Guitar(const string& name, int numberOfStrings, const string& stringMaterial, const string& bodyMaterial, const string& bodyType, const string& mediatormaterial) {
     set_name(name);
     set_stringMaterial(stringMaterial);
     set_bodyMaterial(bodyMaterial);
     set_numberOfStrings(numberOfStrings);
-    set_mediatormaterial(mediatormaterial);
-    set_bodyType(bodyType);
+    set_mediator_material(mediatormaterial);
+    set_body_Type(bodyType);
     attunement = 0;
 }
 
-/// Сеттер для типа корпуса гитары. Если строка пуста, устанавливает значение "None".
-void Guitar::set_bodyType(const string& bodytype) {
+/// Sets the body type of the guitar. If the input is empty, sets it to "None".
+void Guitar::set_body_Type(const string& bodytype) {
     this->bodyType = bodytype.empty() ? "None" : bodytype;
 }
 
-/// Сеттер для материала медиатора. Если строка пуста, устанавливает значение "None".
-void Guitar::set_mediatormaterial(const string& madmat) {
+/// Sets the mediator material of the guitar. If the input is empty, sets it to "None".
+void Guitar::set_mediator_material(const string& madmat) {
     this->mediatormaterial = madmat.empty() ? "None" : madmat;
 }
 
-/// Метод, возвращающий строку с информацией о гитаре.
+/// Returns a string representation of the guitar's attributes.
 string Guitar::to_string() const {
     return("Name: " + name + ", Count of string: " + std::to_string(numberOfStrings) + ", material of string: " + stringMaterial + ", material of body: " + bodyMaterial + ", body type: " + bodyType + ", material of mediator: " + mediatormaterial);
 }
 
-/// Метод для настройки гитары. Устанавливает параметр attunement в 100.
+/// Tunes the guitar, setting the attunement level to 100.
 void Guitar::tune() {
     cout << "Tuning the guitar (" << name << ")..." << "\n";
-    this->attunement = 100; // Настройка становится 100
+    this->attunement = 100; // Sets attunement to 100
 }
 
-/// Метод для игры на гитаре. Проверяет настроенность и уменьшает attunement на 10 после игры.
+/// Plays the guitar. If the attunement level is above 10, it plays and reduces the attunement level by 10. Otherwise, it prints a message that the guitar needs tuning.
 void Guitar::play() {
-    if (attunement > 10) { // Если инструмент расстроен
-        cout << "Playing on " << name << " this mediator made from " << mediatormaterial << "\n"; // Играть на инструменте
+    if (attunement > 10) { // If attunement is sufficient
+        cout << "Playing on " << name << " this mediator made from " << mediatormaterial << "\n"; // Plays the guitar
         this->attunement -= 10;
     }
-    else { // Если инструмент не настроен
+    else { // If attunement is insufficient
         cout << "You can`t play. Tune instrument" << "\n";
     }
 }
 
-/// Метод для сохранения информации о гитаре в файл.
+/// Saves the guitar's attributes to a file.
 void Guitar::saveToFile(std::ofstream& out) const {
-    out << "Guitar\n"; // Записываем тип объекта в файл
-    out << name << "\n" << stringMaterial << "\n" << bodyMaterial << "\n" << numberOfStrings << "\n"; // Записываем данные объекта
+    out << "Guitar\n"; // Writes the type of instrument to the file
+    out << name << "\n" << stringMaterial << "\n" << bodyMaterial << "\n" << numberOfStrings << "\n"; // Writes the relevant attributes to the file
     out << mediatormaterial << "\n" << bodyType << "\n" << attunement << "\n";
 }
 
-/// Метод для загрузки информации о гитаре из файла.
+/// Loads the guitar's attributes from a file.
 void Guitar::loadFromFile(std::ifstream& in) {
-    std::getline(in, name); // Читаем название
-    std::getline(in, stringMaterial); // Читаем материал струн
-    std::getline(in, bodyMaterial); // Читаем материал корпуса
-    in >> numberOfStrings; // Читаем количество струн
-    in.ignore(); // Игнорируем символ новой строки после чтения числа
-    std::getline(in, mediatormaterial); // Читаем материал медиатора
-    std::getline(in, bodyType); // Читаем тип корпуса
-    in >> attunement; // Читаем параметр настроенности гитары
-    in.ignore(); // очищаем буфер потока после чтения числа
+    std::getline(in, name); // Reads the name
+    std::getline(in, stringMaterial); // Reads the string material
+    std::getline(in, bodyMaterial); // Reads the body material
+    in >> numberOfStrings; // Reads the number of strings
+    in.ignore(); // Ignores the newline character
+    std::getline(in, mediatormaterial); // Reads the mediator material
+    std::getline(in, bodyType); // Reads the body type
+    in >> attunement; // Reads the attunement level
+    in.ignore(); // Ignores the newline character
 }
